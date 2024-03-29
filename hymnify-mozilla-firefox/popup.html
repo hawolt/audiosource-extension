@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hymnify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 10px;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 300px;
+        }
+
+        #headingContainer {
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 21px;
+        }
+
+        #textFieldContainer {
+            display: flex;
+            gap: 5px;
+        }
+
+        input[type="password"],
+        input[type="text"] {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #666666;
+            padding: 5px;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        button {
+            background-color: #444444;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        #copyToClipboardButton {
+            flex-shrink: 0;
+        }
+
+        #toggleSettingButton {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #settingIndicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="headingContainer">
+        <img src="https://raw.githubusercontent.com/hawolt/hymnify/main/logo-github.png" alt="header">
+    </div>
+
+    <div id="textFieldContainer">
+        <input type="password" id="textField" value="" readonly>
+        <button id="toggleVisibilityButton">
+            <i id="eyeIcon" class="far fa-eye-slash"></i>
+        </button>
+        <button id="copyToClipboardButton">
+            <i class="far fa-clipboard"></i>
+        </button>
+        <button id="toggleSettingButton">
+            <div id="settingIndicator"></div>
+        </button>
+    </div>
+
+    <div class="row">
+        <span>Made with ❤️ by hawolt</span>
+        <span id="extensionVersion">Version: </span>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
