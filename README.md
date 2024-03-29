@@ -25,7 +25,7 @@ Hymnify serves to monitor active audio playback across browser tabs, automatical
 2. Open Google Chrome browser and type `chrome://extensions/` in the address bar, then press Enter.
 3. In the top right corner of the Extensions page, locate and enable "Developer mode" by toggling the switch.
 4. Next, click on the "Load unpacked" button located in the top left corner of the Extensions page.
-5. A file dialog will open. Navigate to the folder where you unzipped the extension files and select the folder. Then, click "Select Folder" to load the extension into Chrome.
+5. A file dialog will open. Navigate to the folder where you unzipped the extension files and select the folder that corresponds to your Browser. Then, click "Select Folder" to load the extension into Chrome.
 6. Once the extension is loaded, you should see its icon appear among your browser extensions, usually located to the right of the address bar; otherwise click on the Icon resembling a puzzle piece.
 7. To use the extension, click on "Hymnify" and then click on the clipboard icon next to it. This action copies a URL to your clipboard, allowing you to easily share the audio content you are currently listening to.
 
