@@ -1,8 +1,8 @@
 var userid, previous
-chrome.storage.sync.get('hawolt_audio_scraper_id', function (items) {
-    userid = items.hawolt_audio_scraper_id
+chrome.storage.sync.get('hymnify_id', function (items) {
+    userid = items.hymnify_id
     if (!userid) {
-        chrome.storage.sync.set({ hawolt_audio_scraper_id: getRandomToken() }, null)
+        chrome.storage.sync.set({ hymnify_id: getRandomToken() }, null)
     }
 })
 

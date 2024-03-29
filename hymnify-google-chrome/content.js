@@ -10,8 +10,8 @@ function sendTabUrlToServer(url) {
     chrome.storage.sync.get('active', function (items) {
         active = items.active || false
         if (active) {
-            chrome.storage.sync.get('hawolt_audio_scraper_id', function (items) {
-                var userid = items.hawolt_audio_scraper_id
+            chrome.storage.sync.get('hymnify_id', function (items) {
+                var userid = items.hymnify_id
                 fetch('https://audio-extension.hawolt.com/update', {
                     method: 'POST',
                     headers: {

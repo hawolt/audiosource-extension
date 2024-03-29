@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var versionElement = document.getElementById('extensionVersion');
     chrome.runtime.sendMessage({ action: "getVersion" }, function (response) {
         if (response && response.version) {
-            versionElement.textContent = 'Hawolt Audio Scraper V' + response.version;
+            versionElement.textContent = versionElement.textContent + response.version;
         } else {
             console.error("Failed to get extension version");
         }
@@ -51,27 +51,25 @@ document.addEventListener('DOMContentLoaded', function () {
         active = !active
         chrome.storage.sync.set({ 'active': active }, function () {
             updateSettingIndicator(active)
-            if (!active) {
-                chrome.storage.sync.get('hawolt_audio_scraper_id', function (items) {
-                    var userid = items.hawolt_audio_scraper_id
-                    fetch('https://audio-extension.hawolt.com/update', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ url: "extension currently not active", token: userid }),
-                    })
-                        .then(response => response.text())
-                        .then(data => console.log(data))
-                        .catch(error => console.log(error))
+            chrome.storage.sync.get('hymnify_id', function (items) {
+                var userid = items.hymnify_id
+                fetch('https://audio-extension.hawolt.com/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: (active ? "extension active" : "extension currently not active"), token: userid }),
                 })
-            }
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+            })
         })
     })
 
     function setupSourceValue(textField) {
-        chrome.storage.sync.get('hawolt_audio_scraper_id', function (items) {
-            var userid = items.hawolt_audio_scraper_id
+        chrome.storage.sync.get('hymnify_id', function (items) {
+            var userid = items.hymnify_id
             if (userid) {
                 textField.value = "https://audio-extension.hawolt.com/status/" + userid
             }
