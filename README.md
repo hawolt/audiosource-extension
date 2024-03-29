@@ -30,6 +30,8 @@ Hymnify serves to monitor active audio playback across browser tabs, automatical
 7. To use the extension, click on "Hymnify" and then click on the clipboard icon next to it. This action copies a URL to your clipboard, allowing you to easily share the audio content you are currently listening to.
 
 You have successfully installed the Hymnify Chrome extension.
+
+
 Enjoy seamless sharing of audio content from your browsing sessions!
 
 ---
@@ -45,4 +47,6 @@ By clicking the Clipboard Button, the URL associated with your current playback 
 Positioned on the right-hand side, the Toggle Button serves as the primary control mechanism for the extension. When activated (indicated by a green hue), the extension is enabled, allowing it to function. Conversely, deactivating the Toggle Button (indicated by a red hue) turns off the extension, suspending its operations.
     
 These intuitive controls ensure effortless management of the extension's functionalities, empowering users to streamline their audio sharing experience with ease. For instance, you can utilize the link provided by Hymnify to integrate a command on your preferred social media platform, as demonstrated in the following example for Nightbot on Twitch
+
+
 `!commands add !song $(urlfetch LINK_YOU_COPIED_GOES_HERE)`
