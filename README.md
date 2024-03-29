@@ -2,7 +2,7 @@
 
 [discord-shield]: https://discordapp.com/api/guilds/1130517263280246907/widget.png?style=shield
 
-![Header](https://raw.githubusercontent.com/hawolt/hymnify/main/resources/logo-github.png)
+![Header](https://raw.githubusercontent.com/hawolt/hymnify/main/logo-github.png)
 
 ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faudio-extension.hawolt.com%2Fuser&labelColor=green) ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faudio-extension.hawolt.com%2Fcounter&labelColor=orange) [ ![discord-shield][] ][discord-invite] [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhawolt%2Fhymnify&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
