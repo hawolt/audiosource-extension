@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
         active = !active
         chrome.storage.sync.set({ 'active': active }, function () {
             updateSettingIndicator(active)
-            console.log(active)
             if (!active) {
                 chrome.storage.sync.get('hawolt_audio_scraper_id', function (items) {
                     var userid = items.hawolt_audio_scraper_id
