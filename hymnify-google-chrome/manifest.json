@@ -9,7 +9,6 @@
     "permissions": [
         "tabs",
         "activeTab",
-        "scripting",
         "storage"
     ],
     "icons": {
