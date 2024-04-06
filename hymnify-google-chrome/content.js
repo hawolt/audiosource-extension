@@ -7,22 +7,42 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 })
 
 function sendTabUrlToServer(url) {
+    console.log('[hymnify] detected ' + url)
     chrome.storage.sync.get('active', function (items) {
         active = items.active || false
+        console.log('[hymnify] active: ' + active)
         if (active) {
-            chrome.storage.sync.get('hymnify_id', function (items) {
-                var userid = items.hymnify_id
-                fetch('https://audio-extension.hawolt.com/update', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: url, token: userid }),
-                })
-                    .then(response => response.text())
-                    .then(data => console.log(data))
-                    .catch(error => console.log(error))
-            })
+            chrome.storage.sync.get('hymnify_whitelist', function (result) {
+                var whitelist = (result.hymnify_whitelist || '').split(',').map(word => word.trim());
+                console.log('[hymnify] whitelist: ' + whitelist)
+                for (var i = 0; i < whitelist.length; i++) {
+                    var word = whitelist[i];
+                    if (url.includes(word)) {
+                        console.log('[hymnify] whitelist match for: ' + word)
+                        chrome.storage.sync.get('hymnify_delay', function (result) {
+                            var delay = result.hymnify_delay || 0;
+                            console.log('[hymnify] update delay: ' + delay)
+                            setTimeout(function () {
+                                chrome.storage.sync.get('hymnify_id', function (items) {
+                                    console.log('[hymnify] forwarding url')
+                                    var userid = items.hymnify_id
+                                    fetch('https://audio-extension.hawolt.com/update', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({ url: url, token: userid }),
+                                    })
+                                        .then(response => response.text())
+                                        .then(data => console.log(data))
+                                        .catch(error => console.log(error))
+                                })
+                            }, delay * 1000);
+                        });
+                        break;
+                    }
+                }
+            });
         }
     })
 
