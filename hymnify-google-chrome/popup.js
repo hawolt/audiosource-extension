@@ -93,13 +93,38 @@ document.addEventListener('DOMContentLoaded', function () {
         settingIndicator.style.boxShadow = '0 0 5px 2px ' + indicatorColor;
     }
 
-    var entryHelpButton = document.getElementById('addWhitelistHelp');
     var addEntryButton = document.getElementById('addEntryButton');
     var entryInput = document.getElementById('newEntry');
     var entryList = document.getElementById('entryList');
 
-    entryHelpButton.addEventListener('click', function () {
+    chrome.storage.sync.get('hymnify_whitelist', function (result) {
+        var whitelist = result.hymnify_whitelist || '';
+        var whitelistArray = whitelist.split(',').map(entry => entry.trim());
 
+        whitelistArray.forEach(function (entry) {
+            var entryItem = document.createElement('div');
+            entryItem.classList.add('entryItem');
+
+            var entryTextElement = document.createElement('span');
+            entryTextElement.textContent = entry;
+
+            var removeButton = document.createElement('button');
+            var removeIcon = document.createElement('i');
+            removeIcon.classList.add('far', 'fa-trash-alt');
+            removeButton.appendChild(removeIcon);
+
+            removeButton.addEventListener('click', function () {
+                entryItem.remove();
+                removeFromWhitelist(entry);
+                checkEmptyList();
+            });
+
+            entryItem.appendChild(entryTextElement);
+            entryItem.appendChild(removeButton);
+            entryList.appendChild(entryItem);
+        });
+
+        checkEmptyList();
     });
 
     addEntryButton.addEventListener('click', function () {
@@ -211,5 +236,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateDelayInput.addEventListener('input', function () {
         storeUpdateDelayValue();
+    });
+
+    chrome.storage.sync.get('hymnify_delay', function (result) {
+        var delayInSeconds = result.hymnify_delay || 0;
+        var delayInput = document.getElementById('updateDelay');
+        delayInput.value = delayInSeconds;
     });
 });
