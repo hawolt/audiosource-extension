@@ -99,32 +99,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.storage.sync.get('hymnify_whitelist', function (result) {
         var whitelist = result.hymnify_whitelist || '';
-        var whitelistArray = whitelist.split(',').map(entry => entry.trim());
+        if (whitelist.length > 0) {
+            var whitelistArray = whitelist.split(',').map(entry => entry.trim());
+            whitelistArray.forEach(function (entry) {
+                var entryItem = document.createElement('div');
+                entryItem.classList.add('entryItem');
 
-        whitelistArray.forEach(function (entry) {
-            var entryItem = document.createElement('div');
-            entryItem.classList.add('entryItem');
+                var entryTextElement = document.createElement('span');
+                entryTextElement.textContent = entry;
 
-            var entryTextElement = document.createElement('span');
-            entryTextElement.textContent = entry;
+                var removeButton = document.createElement('button');
+                var removeIcon = document.createElement('i');
+                removeIcon.classList.add('far', 'fa-trash-alt');
+                removeButton.appendChild(removeIcon);
 
-            var removeButton = document.createElement('button');
-            var removeIcon = document.createElement('i');
-            removeIcon.classList.add('far', 'fa-trash-alt');
-            removeButton.appendChild(removeIcon);
+                removeButton.addEventListener('click', function () {
+                    entryItem.remove();
+                    removeFromWhitelist(entry);
+                    checkEmptyList();
+                });
 
-            removeButton.addEventListener('click', function () {
-                entryItem.remove();
-                removeFromWhitelist(entry);
-                checkEmptyList();
+                entryItem.appendChild(entryTextElement);
+                entryItem.appendChild(removeButton);
+                entryList.appendChild(entryItem);
             });
-
-            entryItem.appendChild(entryTextElement);
-            entryItem.appendChild(removeButton);
-            entryList.appendChild(entryItem);
-        });
-
-        checkEmptyList();
+        }
     });
 
     addEntryButton.addEventListener('click', function () {
