@@ -53,7 +53,6 @@ function sendTabUrlToServer(url) {
             });
         }
     })
-
 }
 
 function grab() {

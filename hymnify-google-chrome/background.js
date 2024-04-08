@@ -91,6 +91,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         }
     }
 })
+
 chrome.tabs.onCreated.addListener(function (tabId) {
     check()
 })
@@ -107,4 +108,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         check()
     }
 })
+
 check()
