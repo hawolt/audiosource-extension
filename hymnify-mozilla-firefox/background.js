@@ -1,16 +1,17 @@
 var userid, previous;
-
-browser.storage.sync.get('hymnify_id').then(function(items) {
-    userid = items.hymnify_id;
+browser.storage.sync.get('hymnify_id').then(function (items) {
+    userid = items.hymnify_id
     if (!userid) {
-        browser.storage.sync.set({ hymnify_id: getRandomToken() });
+        userid = getRandomToken()
+        browser.storage.sync.set({ hymnify_id: userid });
     }
 });
 
 browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.action === "getVersion") {
-        var manifest = browser.runtime.getManifest();
-        sendResponse({ version: manifest.version });
+    if (message.action === "hymnify-version") {
+        sendResponse({ version: chrome.runtime.getManifest().version });
+    } else if (message.action === "hymnify-id") {
+        sendResponse({ id: userid });
     }
 });
 
