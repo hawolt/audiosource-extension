@@ -34,7 +34,8 @@ Do not share the link provided by the extension in public. The link can be used 
 1. Navigate to your [Nightbot Dashboard](https://nightbot.tv/commands/custom) custom command section
 2. Add a new Command using the button "Add Command" in the top right section of the Dashboard
 3. Assign a name to your command, for example `!song`
-4. Paste this in the message field, make sure to replace the link with the one provided by Hymnify `$(urlfetch LINK_YOU_COPIED_GOES_HERE)`
+4. Paste this in the message field, make sure to replace the link with the one provided by Hymnify
+`$(urlfetch LINK_YOU_COPIED_GOES_HERE)`
 5. Define other parameters of the Command as needed, hit the submit button, done
 
 ## Operating the Extension
