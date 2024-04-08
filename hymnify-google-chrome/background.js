@@ -2,14 +2,16 @@ var userid, previous
 chrome.storage.sync.get('hymnify_id', function (items) {
     userid = items.hymnify_id
     if (!userid) {
-        chrome.storage.sync.set({ hymnify_id: getRandomToken() }, null)
+        userid = getRandomToken()
+        chrome.storage.sync.set({ hymnify_id: userid }, null)
     }
 })
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.action === "getVersion") {
-        var version = chrome.runtime.getManifest().version;
-        sendResponse({ version: version });
+    if (message.action === "hymnify-version") {
+        sendResponse({ version: chrome.runtime.getManifest().version });
+    } else if (message.action === "hymnify-id") {
+        sendResponse({ id: userid });
     }
 });
 
