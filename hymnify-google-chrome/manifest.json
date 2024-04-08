@@ -13,7 +13,7 @@
     ],
     "icons": {
         "128": "resources/icon-128.png"
-      },
+    },
     "externally_connectable": {
         "matches": [
             "*://*/*"

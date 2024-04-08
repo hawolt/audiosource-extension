@@ -1,5 +1,13 @@
 // todo add custom handling for spotify, make this code less messy
 
+window.addEventListener('load', function () {
+    if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
+        chrome.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
+            window.postMessage({ type: 'hymnify-loaded', id: response.id }, '*');
+        });
+    }
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "audio-detected") {
         sendTabUrlToServer(message.url)
@@ -56,7 +64,6 @@ function grab() {
         .getAttribute("href")
 }
 
-var href = ""
 function check() {
     setInterval(() => {
         chrome.storage.sync.get('active', function (items) {

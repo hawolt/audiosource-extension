@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupSettingValue();
 
     var versionElement = document.getElementById('extensionVersion');
-    chrome.runtime.sendMessage({ action: "getVersion" }, function (response) {
+    chrome.runtime.sendMessage({ action: "hymnify-version" }, function (response) {
         if (response && response.version) {
             versionElement.textContent = versionElement.textContent + response.version;
         } else {
