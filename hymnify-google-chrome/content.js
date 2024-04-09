@@ -34,7 +34,7 @@ function sendTabUrlToServer(url) {
                                 chrome.storage.sync.get('hymnify_id', function (items) {
                                     console.log('[hymnify] forwarding url');
                                     var userid = items.hymnify_id;
-                                    fetch('https://audio-extension.hawolt.com/update', {
+                                    fetch('https://api.hymnify.hawolt.com/update', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
