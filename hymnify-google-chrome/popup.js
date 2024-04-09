@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 entryList.appendChild(entryItem);
             });
         }
+        checkEmptyList();
     });
 
     addEntryButton.addEventListener('click', function () {
@@ -193,8 +194,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-
-    checkEmptyList();
 
     const customAlertButton = document.getElementById('addWhitelistHelp');
     const customAlertOverlay = document.getElementById('customAlertOverlay');
