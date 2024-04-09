@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateSettingIndicator(active);
             browser.storage.sync.get('hymnify_id', function (items) {
                 var userid = items.hymnify_id;
-                fetch('https://audio-extension.hawolt.com/update', {
+                fetch('https://api.hymnify.hawolt.com/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         browser.storage.sync.get('hymnify_id', function (items) {
             var userid = items.hymnify_id;
             if (userid) {
-                textField.value = "https://audio-extension.hawolt.com/status/" + userid;
+                textField.value = "https://api.hymnify.hawolt.com/status/" + userid;
             }
         });
     }
