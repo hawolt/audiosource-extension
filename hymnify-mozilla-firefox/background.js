@@ -1,8 +1,8 @@
 var userid;
 browser.storage.sync.get('hymnify_id').then(function (items) {
-    userid = items.hymnify_id
+    userid = items.hymnify_id;
     if (!userid) {
-        userid = getRandomToken()
+        userid = getRandomToken();
         browser.storage.sync.set({ hymnify_id: userid });
     }
 });
@@ -19,6 +19,31 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         sendResponse({ available: available, url: associated });
     }
 });
+
+const tracker = {
+    "https://youtube-playlist-randomizer.bitbucket.io/": "https://www.youtube.com/ptracking",
+};
+
+const tracked = {};
+
+browser.webRequest.onCompleted.addListener(
+    function (details) {
+        if (details.method === "GET" && details.type === "xmlhttprequest") {
+            browser.tabs.get(details.tabId, function (tab) {
+                for (const websiteUrl in tracker) {
+                    if (tab.url.startsWith(websiteUrl)) {
+                        const trackingUrl = tracker[websiteUrl];
+                        if (details.url.startsWith(trackingUrl)) {
+                            tracked[websiteUrl] = details.url;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+    },
+    { urls: ["<all_urls>"] }
+);
 
 function debounce(func, wait, immediate) {
     var timeout;
