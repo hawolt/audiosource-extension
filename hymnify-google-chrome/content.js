@@ -57,7 +57,7 @@ function sendTabUrlToServer(url) {
 
 function detect(url) {
     if (url.startsWith("https://www.youtube.com")) {
-        if (!url.endsWith == 'youtube.com/') {
+        if (!url.endsWith('youtube.com/')) {
             sendTabUrlToServer(url);
         }
     } else if (url.startsWith('https://soundcloud.com')) {
