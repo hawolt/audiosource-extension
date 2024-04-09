@@ -1,6 +1,8 @@
 var interval;
 var href = "";
 
+console.log("loaded!")
+
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
         browser.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
@@ -16,6 +18,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function sendTabUrlToServer(url) {
+    console.log("W? " + url)
     browser.storage.sync.get('active', function (items) {
         active = items.active || false;
         console.log('[hymnify] active: ' + active);
@@ -34,7 +37,7 @@ function sendTabUrlToServer(url) {
                                 browser.storage.sync.get('hymnify_id', function (items) {
                                     console.log('[hymnify] forwarding url');
                                     var userid = items.hymnify_id;
-                                    fetch('https://audio-extension.hawolt.com/update', {
+                                    fetch('https://api.hymnify.hawolt.com/update', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
@@ -57,7 +60,7 @@ function sendTabUrlToServer(url) {
 
 function detect(url) {
     if (url.startsWith("https://www.youtube.com")) {
-        if (!url.endsWith == 'youtube.com/') {
+        if (!url.endsWith('youtube.com/')) {
             sendTabUrlToServer(url);
         }
     } else if (url.startsWith('https://soundcloud.com')) {
