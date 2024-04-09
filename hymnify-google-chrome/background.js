@@ -1,4 +1,4 @@
-var userid, previous
+var userid
 chrome.storage.sync.get('hymnify_id', function (items) {
     userid = items.hymnify_id
     if (!userid) {
@@ -12,8 +12,38 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         sendResponse({ version: chrome.runtime.getManifest().version });
     } else if (message.action === "hymnify-id") {
         sendResponse({ id: userid });
+    } else if (message.action === "hymnify-xhr-tracker") {
+        let origin = message.origin;
+        let available = origin in tracked;
+        let associated = available ? tracked[origin] : "nil";
+        sendResponse({ available: available, url: associated });
     }
 });
+
+const tracker = {
+    "https://youtube-playlist-randomizer.bitbucket.io/": "https://www.youtube.com/ptracking",
+};
+
+const tracked = {};
+
+chrome.webRequest.onCompleted.addListener(
+    function (details) {
+        if (details.method === "GET" && details.type === "xmlhttprequest") {
+            chrome.tabs.get(details.tabId, function (tab) {
+                for (const websiteUrl in tracker) {
+                    if (tab.url.startsWith(websiteUrl)) {
+                        const trackingUrl = tracker[websiteUrl];
+                        if (details.url.startsWith(trackingUrl)) {
+                            tracked[websiteUrl] = details.url;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+    },
+    { urls: ["<all_urls>"] }
+);
 
 function debounce(func, wait, immediate) {
     var timeout
@@ -46,9 +76,6 @@ function query() {
                 anyTabAudible = true
             }
         })
-        if (!anyTabAudible) {
-            // doesnt really work with soundcloud to update url here
-        }
     })
 }
 
@@ -66,15 +93,8 @@ function getRandomToken() {
 
 function checkTabForAudio(tabId) {
     chrome.tabs.get(tabId, tab => {
-        if (tab.audible && previous != tab.url) {
-            previous = tab.url
-            if (tab.url.endsWith == 'youtube.com/') {
-                //ignore youtube landing page
-            } else if (tab.url.includes('soundcloud')) {
-                //handled by content.js
-            } else {
-                chrome.tabs.sendMessage(tabId, { action: "audio-detected", url: tab.url })
-            }
+        if (tab.audible) {
+            chrome.tabs.sendMessage(tabId, { action: "audio-detected", url: tab.url })
         }
     })
 }
@@ -85,8 +105,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
             var active = changes[key].newValue
             if (active) {
                 check()
-            } else {
-                previous = ""
             }
         }
     }

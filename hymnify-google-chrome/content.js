@@ -1,4 +1,5 @@
-// todo add custom handling for spotify, make this code less messy
+var interval;
+var href = ""
 
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
@@ -10,12 +11,11 @@ window.addEventListener('load', function () {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "audio-detected") {
-        sendTabUrlToServer(message.url)
+        detect(message.url);
     }
 })
 
 function sendTabUrlToServer(url) {
-    console.log('[hymnify] detected ' + url)
     chrome.storage.sync.get('active', function (items) {
         active = items.active || false
         console.log('[hymnify] active: ' + active)
@@ -55,31 +55,73 @@ function sendTabUrlToServer(url) {
     })
 }
 
-function grab() {
-    return "https://soundcloud.com" + document
-        .querySelector(
-            "#app > div.playControls.g-z-index-control-bar.m-visible > section > div > div.playControls__elements > div.playControls__soundBadge > div > div.playbackSoundBadge__titleContextContainer > div > a"
-        )
-        .getAttribute("href")
+function detect(url) {
+    if (url.startsWith("https://www.youtube.com")) {
+        if (!url.endsWith == 'youtube.com/') {
+            sendTabUrlToServer(url)
+        }
+    } else if (url.startsWith('https://soundcloud.com')) {
+        refresh(getSoundcloud)
+    } else if (url.startsWith('https://youtube-playlist-randomizer.bitbucket.io')) {
+        refresh(getYoutubePlaylistRandomizer)
+    } else {
+        console.log('[hymnify] website not supported, forwarding possibly inaccurate link')
+        sendTabUrlToServer(url)
+    }
 }
 
-function check() {
-    setInterval(() => {
+function refresh(call) {
+    if (interval) {
+        clearInterval(interval);
+    }
+    interval = setInterval(() => {
+        call(process);
+    }, 1000)
+}
+
+function process(url) {
+    if (url) {
         chrome.storage.sync.get('active', function (items) {
             active = items.active || false
             if (!active) {
                 href = ""
             } else {
-                const current = grab()
+                const current = url;
                 if (current !== null && current !== href) {
                     sendTabUrlToServer(current)
                     href = current
                 }
             }
         })
-    }, 1000)
+    }
 }
 
-if (window.location.href.includes('soundcloud.com')) {
-    check()
+function getSoundcloud(callback) {
+    let href = "https://soundcloud.com" + document
+        .querySelector(
+            "#app > div.playControls.g-z-index-control-bar.m-visible > section > div > div.playControls__elements > div.playControls__soundBadge > div > div.playbackSoundBadge__titleContextContainer > div > a"
+        )
+        .getAttribute("href");
+    callback(href);
+}
+
+function getYoutubePlaylistRandomizer(callback) {
+    chrome.runtime.sendMessage({ action: "hymnify-xhr-tracker", origin: "https://youtube-playlist-randomizer.bitbucket.io/" }, function (response) {
+        if (response.available) {
+            let videoId = extractQueryParam(response.url, "video_id");
+            callback("https://www.youtube.com/watch?v=" + videoId);
+        } else {
+            callback(null);
+        }
+    });
+}
+
+function extractQueryParam(url, paramName) {
+    const regex = new RegExp('[?&]' + paramName + '=([^&]+)');
+    const match = regex.exec(url);
+    if (match && match[1]) {
+        return match[1];
+    } else {
+        return null;
+    }
 }
