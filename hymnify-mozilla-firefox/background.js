@@ -1,4 +1,4 @@
-var userid, previous;
+var userid;
 browser.storage.sync.get('hymnify_id').then(function (items) {
     userid = items.hymnify_id
     if (!userid) {
@@ -12,6 +12,11 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         sendResponse({ version: chrome.runtime.getManifest().version });
     } else if (message.action === "hymnify-id") {
         sendResponse({ id: userid });
+    } else if (message.action === "hymnify-xhr-tracker") {
+        let origin = message.origin;
+        let available = origin in tracked;
+        let associated = available ? tracked[origin] : "nil";
+        sendResponse({ available: available, url: associated });
     }
 });
 
@@ -46,9 +51,6 @@ function query() {
                 anyTabAudible = true;
             }
         });
-        if (!anyTabAudible) {
-            // doesn't really work with soundcloud to update url here
-        }
     });
 }
 
@@ -66,15 +68,8 @@ function getRandomToken() {
 
 function checkTabForAudio(tabId) {
     browser.tabs.get(tabId).then(tab => {
-        if (tab.audible && previous != tab.url) {
-            previous = tab.url;
-            if (tab.url.endsWith == 'youtube.com/') {
-                // ignore youtube landing page
-            } else if (tab.url.includes('soundcloud')) {
-                // handled by content.js
-            } else {
-                browser.tabs.sendMessage(tabId, { action: "audio-detected", url: tab.url });
-            }
+        if (tab.audible) {
+            browser.tabs.sendMessage(tabId, { action: "audio-detected", url: tab.url });
         }
     });
 }
@@ -85,8 +80,6 @@ browser.storage.onChanged.addListener(function (changes, namespace) {
             var active = changes[key].newValue;
             if (active) {
                 check();
-            } else {
-                previous = "";
             }
         }
     }
