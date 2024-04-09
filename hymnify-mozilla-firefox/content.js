@@ -1,8 +1,6 @@
 var interval;
 var href = "";
 
-console.log("loaded!")
-
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
         browser.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
@@ -18,7 +16,6 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function sendTabUrlToServer(url) {
-    console.log("W? " + url)
     browser.storage.sync.get('active', function (items) {
         active = items.active || false;
         console.log('[hymnify] active: ' + active);
