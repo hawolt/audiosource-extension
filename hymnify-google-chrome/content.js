@@ -1,5 +1,5 @@
 var interval;
-var href = ""
+var href = "";
 
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
@@ -13,27 +13,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "audio-detected") {
         detect(message.url);
     }
-})
+});
 
 function sendTabUrlToServer(url) {
     chrome.storage.sync.get('active', function (items) {
-        active = items.active || false
-        console.log('[hymnify] active: ' + active)
+        active = items.active || false;
+        console.log('[hymnify] active: ' + active);
         if (active) {
             chrome.storage.sync.get('hymnify_whitelist', function (result) {
                 var whitelist = (result.hymnify_whitelist || '').split(',').map(word => word.trim());
-                console.log('[hymnify] whitelist: ' + whitelist)
+                console.log('[hymnify] whitelist: ' + whitelist);
                 for (var i = 0; i < whitelist.length; i++) {
                     var word = whitelist[i];
                     if (url.includes(word)) {
-                        console.log('[hymnify] whitelist match for: ' + word)
+                        console.log('[hymnify] whitelist match for: ' + word);
                         chrome.storage.sync.get('hymnify_delay', function (result) {
                             var delay = result.hymnify_delay || 0;
-                            console.log('[hymnify] update delay: ' + delay)
+                            console.log('[hymnify] update delay: ' + delay);
                             setTimeout(function () {
                                 chrome.storage.sync.get('hymnify_id', function (items) {
-                                    console.log('[hymnify] forwarding url')
-                                    var userid = items.hymnify_id
+                                    console.log('[hymnify] forwarding url');
+                                    var userid = items.hymnify_id;
                                     fetch('https://audio-extension.hawolt.com/update', {
                                         method: 'POST',
                                         headers: {
@@ -43,8 +43,8 @@ function sendTabUrlToServer(url) {
                                     })
                                         .then(response => response.text())
                                         .then(data => console.log(data))
-                                        .catch(error => console.log(error))
-                                })
+                                        .catch(error => console.log(error));
+                                });
                             }, delay * 1000);
                         });
                         break;
@@ -52,21 +52,21 @@ function sendTabUrlToServer(url) {
                 }
             });
         }
-    })
+    });
 }
 
 function detect(url) {
     if (url.startsWith("https://www.youtube.com")) {
         if (!url.endsWith == 'youtube.com/') {
-            sendTabUrlToServer(url)
+            sendTabUrlToServer(url);
         }
     } else if (url.startsWith('https://soundcloud.com')) {
-        refresh(getSoundcloud)
+        refresh(getSoundcloud);
     } else if (url.startsWith('https://youtube-playlist-randomizer.bitbucket.io')) {
-        refresh(getYoutubePlaylistRandomizer)
+        refresh(getYoutubePlaylistRandomizer);
     } else {
-        console.log('[hymnify] website not supported, forwarding possibly inaccurate link')
-        sendTabUrlToServer(url)
+        console.log('[hymnify] website not supported, forwarding possibly inaccurate link');
+        sendTabUrlToServer(url);
     }
 }
 
@@ -76,23 +76,23 @@ function refresh(call) {
     }
     interval = setInterval(() => {
         call(process);
-    }, 1000)
+    }, 1000);
 }
 
 function process(url) {
     if (url) {
         chrome.storage.sync.get('active', function (items) {
-            active = items.active || false
+            active = items.active || false;
             if (!active) {
-                href = ""
+                href = "";
             } else {
                 const current = url;
                 if (current !== null && current !== href) {
-                    sendTabUrlToServer(current)
-                    href = current
+                    sendTabUrlToServer(current);
+                    href = current;
                 }
             }
-        })
+        });
     }
 }
 
