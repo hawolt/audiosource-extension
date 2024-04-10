@@ -60,6 +60,8 @@ function detect(url) {
         if (!url.endsWith('youtube.com/')) {
             sendTabUrlToServer(url);
         }
+    } else if (url.startsWith('https://open.spotify.com')) {
+        refresh(getSpotify);
     } else if (url.startsWith('https://soundcloud.com')) {
         refresh(getSoundcloud);
     } else if (url.startsWith('https://youtube-playlist-randomizer.bitbucket.io')) {
@@ -94,6 +96,11 @@ function process(url) {
             }
         });
     }
+}
+
+function getSpotify(callback) {
+    let href = "https://open.spotify.com" + document.querySelector('div[data-testid="now-playing-widget"] a').getAttribute('href');
+    callback(href);
 }
 
 function getSoundcloud(callback) {

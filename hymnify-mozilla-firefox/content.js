@@ -3,8 +3,8 @@ var href = "";
 
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
-        browser.runtime.sendMessage({action: "hymnify-id"}, function (response) {
-            window.postMessage({type: 'hymnify-loaded', id: response.id}, '*');
+        browser.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
+            window.postMessage({ type: 'hymnify-loaded', id: response.id }, '*');
         });
     }
 });
@@ -39,7 +39,7 @@ function sendTabUrlToServer(url) {
                                         headers: {
                                             'Content-Type': 'application/json',
                                         },
-                                        body: JSON.stringify({url: url, token: userid}),
+                                        body: JSON.stringify({ url: url, token: userid }),
                                     })
                                         .then(response => response.text())
                                         .then(data => console.log(data))
@@ -60,6 +60,8 @@ function detect(url) {
         if (!url.endsWith('youtube.com/')) {
             sendTabUrlToServer(url);
         }
+    } else if (url.startsWith('https://open.spotify.com')) {
+        refresh(getSpotify);
     } else if (url.startsWith('https://soundcloud.com')) {
         refresh(getSoundcloud);
     } else if (url.startsWith('https://youtube-playlist-randomizer.bitbucket.io')) {
@@ -68,6 +70,11 @@ function detect(url) {
         console.log('[hymnify] website not supported, forwarding possibly inaccurate link');
         sendTabUrlToServer(url);
     }
+}
+
+function getSpotify(callback) {
+    let href = "https://open.spotify.com" + document.querySelector('div[data-testid="now-playing-widget"] a').getAttribute('href');
+    callback(href);
 }
 
 function refresh(call) {
