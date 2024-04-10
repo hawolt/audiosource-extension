@@ -3,8 +3,8 @@ var href = "";
 
 window.addEventListener('load', function () {
     if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
-        browser.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
-            window.postMessage({ type: 'hymnify-loaded', id: response.id }, '*');
+        browser.runtime.sendMessage({action: "hymnify-id"}, function (response) {
+            window.postMessage({type: 'hymnify-loaded', id: response.id}, '*');
         });
     }
 });
@@ -25,7 +25,7 @@ function sendTabUrlToServer(url) {
                 console.log('[hymnify] whitelist: ' + whitelist);
                 for (var i = 0; i < whitelist.length; i++) {
                     var word = whitelist[i];
-                    if (url.includes(word)) {
+                    if (word.length > 0 && url.includes(word)) {
                         console.log('[hymnify] whitelist match for: ' + word);
                         browser.storage.sync.get('hymnify_delay', function (result) {
                             var delay = result.hymnify_delay || 0;
@@ -39,7 +39,7 @@ function sendTabUrlToServer(url) {
                                         headers: {
                                             'Content-Type': 'application/json',
                                         },
-                                        body: JSON.stringify({ url: url, token: userid }),
+                                        body: JSON.stringify({url: url, token: userid}),
                                     })
                                         .then(response => response.text())
                                         .then(data => console.log(data))
@@ -106,7 +106,10 @@ function getSoundcloud(callback) {
 }
 
 function getYoutubePlaylistRandomizer(callback) {
-    browser.runtime.sendMessage({ action: "hymnify-xhr-tracker", origin: "https://youtube-playlist-randomizer.bitbucket.io/" }, function (response) {
+    browser.runtime.sendMessage({
+        action: "hymnify-xhr-tracker",
+        origin: "https://youtube-playlist-randomizer.bitbucket.io/"
+    }, function (response) {
         if (response.available) {
             let videoId = extractQueryParam(response.url, "video_id");
             callback("https://www.youtube.com/watch?v=" + videoId);

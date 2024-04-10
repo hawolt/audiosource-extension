@@ -25,7 +25,7 @@ function sendTabUrlToServer(url) {
                 console.log('[hymnify] whitelist: ' + whitelist);
                 for (var i = 0; i < whitelist.length; i++) {
                     var word = whitelist[i];
-                    if (url.includes(word)) {
+                    if (word.length > 0 && url.includes(word)) {
                         console.log('[hymnify] whitelist match for: ' + word);
                         chrome.storage.sync.get('hymnify_delay', function (result) {
                             var delay = result.hymnify_delay || 0;
