@@ -20,7 +20,7 @@ Do not share the link provided by the extension in public. The link can be used 
  3. **Privacy Assurance:** 
  No logging or history of forwarded URLs is maintained, and user data remains anonymous.
  4. **Browser Compatibility:**
- Currently compatible with Mozilla Firefox and Google Chrome.
+ Currently compatible with Chromium based Browsers and Mozilla Firefox.
 
 ## Installation
 
