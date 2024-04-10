@@ -37,8 +37,11 @@ Do not share the link provided by the extension in public. The link can be used 
 4. Click the Join button to make Hymnify join your Twitch Chat
 5. Promote Hymnify to moderator `/mod Hymnify`
 6. Add the website that you are using to the whitelist, for example `youtube.com`
-7. Enable the extension by turning it on, click on the red indicator (green: on, red: off)
-8. Use the command !song in your Chat, the cooldown is 15 seconds.
+7. Refresh the tab playing music to make sure Hymnify is properly loaded
+8. Enable the extension by turning it on, click on the red indicator (green: on, red: off)
+9. Use the command !song in your Chat, the cooldown is 15 seconds.
+
+*something not working? join my [discord](https://discord.hawolt.com) and ask ahead!*
 
 ## Setup using Nightbot (deprecated, scheduled for deletion)
 
