@@ -26,8 +26,19 @@ Do not share the link provided by the extension in public. The link can be used 
 
 - [Google Chrome](https://chromewebstore.google.com/detail/hymnify/jgalnhgccekkgfglcimenmghbbneelck)
 - [Mozilla Firefox](https://addons.mozilla.org/firefox/addon/hymnify)
+- [Opera GX](https://chromewebstore.google.com/detail/hymnify/jgalnhgccekkgfglcimenmghbbneelck)
+- [Microsoft Edge](https://chromewebstore.google.com/detail/hymnify/jgalnhgccekkgfglcimenmghbbneelck)
 
-## Setup using Nightbot
+## Setup using Hymnify
+
+1. Navigate to the [Hymnify Dashboard](https://hymnify.hawolt.com/dashboard/)
+2. Login with Twitch when prompted
+3. Wait for the redirect to take you to the Dashboard
+4. Click the Join button to make Hymnify join your Twitch Chat
+5. Promote Hymnify to moderator `/mod Hymnify`
+6. Use the command !song in your Chat, the cooldown is 15 seconds.
+
+## Setup using Nightbot (deprecated, scheduled for deletion)
 
 *The link provided by the **Clipboard Button** is designed to be utilized by a third-party integration to ensure that the data is displayed correctly.*
 
@@ -56,17 +67,17 @@ Positioned at the bottom of the popup window, the Update Delay ensures synchroni
 
 ## Manual Installation Guide
 
-### Google Chrome, Persistent Installation
+### Chromium Browser (Chrome, Opera, Edge), Persistent Installation
 
 1. Download the extension files from this GitHub repository. Once downloaded, unzip the file.
 2. Open Google Chrome browser and type `chrome://extensions/` in the address bar, then press Enter.
-3. In the top right corner of the Extensions page, locate and enable "Developer mode" by toggling the switch.
-4. Next, click on the "Load unpacked" button located in the top left corner of the Extensions page.
-5. A file dialog will open. Navigate to the folder where you unzipped the extension files and select the folder that corresponds to your Browser. Then, click "Select Folder" to load the extension into Chrome.
+3. Locate and enable "Developer mode" by toggling the switch.
+4. Next, click on the "Load unpacked" button of the Extensions page.
+5. A file dialog will open. Navigate to the folder where you unzipped the extension files and select the folder that corresponds to your Browser. Then, click "Select Folder" to load the extension into your Browser.
 6. Once the extension is loaded, you should see its icon appear among your browser extensions, usually located to the right of the address bar; otherwise click on the Icon resembling a puzzle piece.
 7. To use the extension, click on "Hymnify" and then click on the clipboard icon next to it. This action copies a URL to your clipboard, allowing you to easily share the audio content you are currently listening to.
 
-### Mozilla Firefox, Temporary Installation
+### Gecko (Firefox), Temporary Installation
 
 *Please note that this installation is not permanent. To install Hymnify persistently, please use the Mozilla Web Store.*
 
