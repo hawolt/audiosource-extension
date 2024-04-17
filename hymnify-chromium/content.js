@@ -16,6 +16,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function sendTabUrlToServer(url) {
+    if (url === href) {
+        console.log('[hymnify] prevent duplicate submission');
+        return;
+    } else {
+        href = current;
+    }
     chrome.storage.sync.get('active', function (items) {
         active = items.active || false;
         console.log('[hymnify] active: ' + active);
@@ -58,7 +64,7 @@ function sendTabUrlToServer(url) {
 function detect(url) {
     if (url.startsWith("https://www.youtube.com")) {
         if (!url.endsWith('youtube.com/')) {
-            sendTabUrlToServer(url);
+            sendTabUrlToServer(removeQueryParam(url, 't'));
         }
     } else if (url.startsWith('https://open.spotify.com')) {
         refresh(getSpotify);
@@ -85,13 +91,10 @@ function process(url) {
     if (url) {
         chrome.storage.sync.get('active', function (items) {
             active = items.active || false;
-            if (!active) {
-                href = "";
-            } else {
+            if (active) {
                 const current = url;
-                if (current !== null && current !== href) {
+                if (current !== null) {
                     sendTabUrlToServer(current);
-                    href = current;
                 }
             }
         });
@@ -113,7 +116,10 @@ function getSoundcloud(callback) {
 }
 
 function getYoutubePlaylistRandomizer(callback) {
-    chrome.runtime.sendMessage({ action: "hymnify-xhr-tracker", origin: "https://youtube-playlist-randomizer.bitbucket.io/" }, function (response) {
+    chrome.runtime.sendMessage({
+        action: "hymnify-xhr-tracker",
+        origin: "https://youtube-playlist-randomizer.bitbucket.io/"
+    }, function (response) {
         if (response.available) {
             let videoId = extractQueryParam(response.url, "video_id");
             callback("https://www.youtube.com/watch?v=" + videoId);
@@ -121,6 +127,14 @@ function getYoutubePlaylistRandomizer(callback) {
             callback(null);
         }
     });
+}
+
+function removeQueryParam(url, paramToRemove) {
+    var parts = url.split('?');
+    if (parts.length < 2 || !paramToRemove) return url;
+    var queryParams = parts[1].split('&');
+    var newQueryString = queryParams.filter(param => param.split('=')[0] !== paramToRemove).join('&');
+    return parts[0] + (newQueryString ? '?' + newQueryString : '');
 }
 
 function extractQueryParam(url, paramName) {
