@@ -196,6 +196,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    document.getElementById('open-dashboard').addEventListener('click', function() {
+        window.open('https://hymnify.hawolt.com/dashboard/', '_blank');
+    });
+
     const customAlertButton = document.getElementById('addWhitelistHelp');
     const customAlertOverlay = document.getElementById('customAlertOverlay');
     const closeAlertButton = document.getElementById('closeAlertButton');
