@@ -20,7 +20,7 @@ function sendTabUrlToServer(url) {
         console.log('[hymnify] prevent duplicate submission');
         return;
     } else {
-        href = current;
+        href = url;
     }
     chrome.storage.sync.get('active', function (items) {
         active = items.active || false;
