@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Hymnify",
     "description": "Attempts to identify the current audio source",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "permissions": [
         "tabs",
         "activeTab",
