@@ -31,7 +31,7 @@ Do not share the link provided by the extension in public. The link can be used 
 
 ## Setup using Hymnify
 
-1. Navigate to the [Hymnify Dashboard](https://hymnify.hawolt.com/dashboard/)
+1. Navigate to the [Hymnify Dashboard](https://hymnify.org/dashboard/)
 2. Login with Twitch when prompted
 3. Wait for the redirect to take you to the Dashboard
 4. Click the Join button to make Hymnify join your Twitch Chat
