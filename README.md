@@ -4,7 +4,7 @@
 
 ![Header](https://raw.githubusercontent.com/hawolt/hymnify/main/logo-github.png)
 
-![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faudio-extension.hawolt.com%2Fuser&labelColor=green) ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faudio-extension.hawolt.com%2Fcounter&labelColor=orange) ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faudio-extension.hawolt.com%2Fserves&labelColor=yellow) [ ![discord-shield][] ][discord-invite] [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhawolt%2Fhymnify&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.hymnify.org%2Fuser&labelColor=green) ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.hymnify.org%2Fcounter&labelColor=orange) ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.hymnify.org%2Fserves&labelColor=yellow) [ ![discord-shield][] ][discord-invite] [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhawolt%2Fhymnify&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 # **Hymnify Extension**
 Hymnify serves to monitor active audio playback across browser tabs, automatically forwarding the URL of any tab streaming audio content to a designated server.
