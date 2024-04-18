@@ -9,7 +9,7 @@
 # **Hymnify Extension**
 Hymnify serves to monitor active audio playback across browser tabs, automatically forwarding the URL of any tab streaming audio content to a designated server.
 
-# Diclaimer
+# Disclaimer
 Do not share the link provided by the extension in public. The link can be used to update data associated with your extension. In the instance that your link is compromised, please reinstall the extension to obtain a new link.
 
 ## Features:
