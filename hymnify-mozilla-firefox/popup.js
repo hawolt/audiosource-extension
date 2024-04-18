@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateSettingIndicator(active);
             browser.storage.sync.get('hymnify_id', function (items) {
                 var userid = items.hymnify_id;
-                fetch('https://api.hymnify.hawolt.com/update', {
+                fetch('https://api.hymnify.org/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         browser.storage.sync.get('hymnify_id', function (items) {
             var userid = items.hymnify_id;
             if (userid) {
-                textField.value = "https://api.hymnify.hawolt.com/status/" + userid;
+                textField.value = "https://api.hymnify.org/status/" + userid;
             }
         });
     }
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById('open-dashboard').addEventListener('click', function() {
-        window.open('https://hymnify.hawolt.com/dashboard/', '_blank');
+        window.open('https://hymnify.org/dashboard/', '_blank');
     });
 
     const customAlertButton = document.getElementById('addWhitelistHelp');

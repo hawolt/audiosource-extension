@@ -2,7 +2,7 @@ var interval;
 var href = "";
 
 window.addEventListener('load', function () {
-    if (window.location.href.startsWith("https://hymnify.hawolt.com")) {
+    if (window.location.href.startsWith("https://hymnify.org")) {
         chrome.runtime.sendMessage({ action: "hymnify-id" }, function (response) {
             window.postMessage({ type: 'hymnify-loaded', id: response.id }, '*');
         });
@@ -40,7 +40,7 @@ function sendTabUrlToServer(url) {
                                 chrome.storage.sync.get('hymnify_id', function (items) {
                                     console.log('[hymnify] forwarding url');
                                     var userid = items.hymnify_id;
-                                    fetch('https://api.hymnify.hawolt.com/update', {
+                                    fetch('https://api.hymnify.org/update', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
